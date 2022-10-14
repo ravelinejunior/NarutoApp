@@ -71,19 +71,16 @@ fun Splash(degrees: Float) {
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Column(modifier = Modifier.align(Alignment.Center)) {
-                LottieAnimation(
-                    composition = composition.value,
-                    progress = progress,
-                    modifier = Modifier
-                        .rotate(degrees = degrees)
-                        .padding(4.dp)
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.5f),
-                    maintainOriginalImageBounds = true
-                )
-
-            }
+            LottieAnimation(
+                composition = composition.value,
+                progress = progress,
+                modifier = Modifier
+                    .rotate(degrees = degrees)
+                    .padding(4.dp)
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.5f),
+                maintainOriginalImageBounds = true
+            )
         }
     } else {
         Box(

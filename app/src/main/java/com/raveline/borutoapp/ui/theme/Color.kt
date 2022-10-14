@@ -1,5 +1,7 @@
 package com.raveline.borutoapp.ui.theme
 
+import androidx.compose.material.Colors
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -27,3 +29,10 @@ val Teal40 = Color(0xFF26C6DA)
 val Green70 = Color(0xFF00BFA5)
 val Green60 = Color(0xFF00897B)
 val Green40 = Color(0xFF1DE9B6)
+
+val LightGray = Color(0xFF9B9B9B)
+val DarkGray = Color(0xFF3A3A3A)
+
+val Colors.welcomeScreenBackgroundColor
+@Composable
+get() = if (isLight) Color.White else Color.Black
