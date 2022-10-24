@@ -34,5 +34,13 @@ val LightGray = Color(0xFF9B9B9B)
 val DarkGray = Color(0xFF3A3A3A)
 
 val Colors.welcomeScreenBackgroundColor
-@Composable
-get() = if (isLight) Color.White else Color.Black
+    @Composable
+    get() = if (isLight) Color.White else Color.Black
+
+val Colors.titleWelcomeColor
+    @Composable
+    get() = if (isLight) DarkGray else LightGray
+
+val Colors.descriptionWelcomeColor
+    @Composable
+    get() = if (isLight) DarkGray.copy(alpha = 0.5f) else LightGray.copy(alpha = 0.5f)

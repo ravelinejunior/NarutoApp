@@ -12,7 +12,7 @@ import com.raveline.borutoapp.utils.Constants
 
 @Composable
 fun SetupNavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Screen.Splash.route) {
+    NavHost(navController = navController, startDestination = Screen.Welcome.route) {
         composable(route = Screen.Splash.route) {
             SplashScreen(navController = navController)
         }
