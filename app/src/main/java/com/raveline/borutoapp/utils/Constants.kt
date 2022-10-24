@@ -15,4 +15,8 @@ object Constants {
     const val heroTableName = "HERO_TABLE"
     const val heroDatabaseName = "HERO_DATABASE"
     const val heroRemoteKeyTableName = "HERO_REMOTE_KEY_TABLE"
+
+    //DataStore
+    const val DATASTORE_PREFERENCE_NAME = "NARUTO_APP_KEY"
+    const val DATASTORE_PREFERENCE_KEY = "ON_BOARDING_COMPLETED"
 }
