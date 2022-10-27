@@ -16,17 +16,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.airbnb.lottie.compose.*
 import com.google.accompanist.pager.*
 import com.raveline.borutoapp.data.model.OnBoardingPage
+import com.raveline.borutoapp.navigation.Screen
 import com.raveline.borutoapp.ui.theme.*
+import com.raveline.borutoapp.ui.viewmodel.WelcomeViewModel
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun WelcomeScree(navController: NavController) {
+fun WelcomeScree(
+    navController: NavController,
+    welcomeViewModel: WelcomeViewModel = hiltViewModel()
+) {
 
     val pages = listOf(
         OnBoardingPage.First,
@@ -65,7 +70,9 @@ fun WelcomeScree(navController: NavController) {
 
         //Finish Button
         FinishButton(pagerState = pagerState, modifier = Modifier.weight(1f)) {
-
+            navController.popBackStack()
+            navController.navigate(Screen.Home.route)
+            welcomeViewModel.saveOnBoardingState(completed = true)
         }
     }
 
@@ -153,10 +160,12 @@ fun FinishButton(
                 ),
                 shape = RoundedCornerShape(16.dp)
             ) {
-                Text(text = "Finish", style = TextStyle(
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                ))
+                Text(
+                    text = "Finish", style = TextStyle(
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                    )
+                )
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.raveline.borutoapp.data.repositoryImpl
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -37,10 +38,14 @@ class DataStoreOperationsImpl(context: Context):DataStoreOperations {
                 if(exception is IOException){
                     emit(emptyPreferences())
                 }else{
+                    val tAGI = "TAGPrefs"
+                    Log.i(tAGI, "readOnBoardingStateError: $exception")
                     throw exception
                 }
             }.map { prefs ->
                 val onBoardingState = prefs[PreferenceKey.onBoardingKey]?:false
+                val tAGI = "TAGPrefs"
+                Log.i(tAGI, "readOnBoardingState: $onBoardingState")
                 onBoardingState
             }
     }
