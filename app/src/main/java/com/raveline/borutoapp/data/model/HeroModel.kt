@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.raveline.borutoapp.utils.Constants.heroTableName
 
-
+@kotlinx.serialization.Serializable
 @Entity(tableName = heroTableName)
 data class HeroModel(
     @PrimaryKey(autoGenerate = false)

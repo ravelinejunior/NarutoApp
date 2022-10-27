@@ -19,4 +19,7 @@ object Constants {
     //DataStore
     const val DATASTORE_PREFERENCE_NAME = "NARUTO_APP_KEY"
     const val DATASTORE_PREFERENCE_KEY = "ON_BOARDING_COMPLETED"
+
+    //Network
+    const val BASE_URL = "http://10.0.2.2:8080"
 }
