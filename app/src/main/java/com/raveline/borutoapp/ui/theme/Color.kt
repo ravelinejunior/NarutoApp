@@ -54,6 +54,14 @@ val Colors.inactiveColorIndicator
     @Composable
     get() = if (isLight) LightGray else DarkGray
 
+val Colors.topBarBackgroundColorLightDarkMode
+    @Composable
+    get() = if (isLight) White else LightGray
+
+val Colors.topBarContentColorLightDarkMode
+    @Composable
+    get() = if (isLight) Black else Color.Blue
+
 
 
 
