@@ -33,6 +33,7 @@ val Green40 = Color(0xFF1DE9B6)
 
 val LightGray = Color(0xFF9B9B9B)
 val DarkGray = Color(0xFF3A3A3A)
+val StarColor = Color(0xFFFAD371)
 
 val Colors.welcomeScreenBackgroundColor
     @Composable
