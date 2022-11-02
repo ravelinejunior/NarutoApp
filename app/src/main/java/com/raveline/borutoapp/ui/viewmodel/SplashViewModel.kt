@@ -22,7 +22,7 @@ class SplashViewModel @Inject constructor(
     init {
         viewModelScope.launch(IO) {
             _onBoardingCompleted.value =
-                useCases.onBoardingUseCases.invoke().stateIn(viewModelScope).value
+                useCases.onBoardingUseCases().stateIn(viewModelScope).value
         }
     }
 
