@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.raveline.borutoapp.ui.common.components.RatingWidget
+import com.raveline.borutoapp.ui.common.widget.ListComponent
 import com.raveline.borutoapp.ui.screens.homeScreen.components.TopAppBarHome
 import com.raveline.borutoapp.ui.theme.LARGE_PADDING
 import com.raveline.borutoapp.ui.viewmodel.HomeViewModel
@@ -26,6 +27,6 @@ fun HomeScreen(
             TopAppBarHome(onSearchClicked = {})
         }
     ) {
-        RatingWidget(modifier = Modifier.padding(all = LARGE_PADDING), rating = 4.1)
+        ListComponent(heroes = allHeroes, navController = navController)
     }
 }
