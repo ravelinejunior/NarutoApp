@@ -27,6 +27,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
+import coil.annotation.ExperimentalCoilApi
 
 import coil.compose.rememberAsyncImagePainter
 import com.raveline.borutoapp.R
@@ -36,6 +37,7 @@ import com.raveline.borutoapp.ui.common.components.RatingWidget
 import com.raveline.borutoapp.ui.theme.*
 import com.raveline.borutoapp.utils.Constants.BASE_URL
 
+@ExperimentalCoilApi
 @Composable
 fun ListComponent(
     heroes: LazyPagingItems<HeroModel>,
