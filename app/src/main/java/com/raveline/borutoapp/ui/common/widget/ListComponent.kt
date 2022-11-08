@@ -1,13 +1,14 @@
 package com.raveline.borutoapp.ui.common.widget
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Surface
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,9 +21,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.items
+
 import coil.compose.rememberAsyncImagePainter
 import com.raveline.borutoapp.R
 import com.raveline.borutoapp.data.model.HeroModel
@@ -36,7 +41,21 @@ fun ListComponent(
     heroes: LazyPagingItems<HeroModel>,
     navController: NavController
 ) {
-
+    LazyColumn(
+        contentPadding = PaddingValues(all = SMALL_PADDING),
+        verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
+    ) {
+        items(
+            items = heroes,
+            key = { hero ->
+                hero.id
+            }
+        ) { hero ->
+            hero?.let {
+                HeroItem(navController = navController, heroModel = it)
+            }
+        }
+    }
 }
 
 @Composable
@@ -63,7 +82,12 @@ fun HeroItem(
             },
         contentAlignment = Alignment.BottomCenter
     ) {
-        Surface(shape = Shapes().large) {
+        Surface(
+            shape = RoundedCornerShape(
+                bottomStart = MEDIUM_LARGE_PADDING,
+                bottomEnd = MEDIUM_LARGE_PADDING,
+            )
+        ) {
             Image(
                 modifier = Modifier.fillMaxSize(),
                 painter = painter,
@@ -78,8 +102,8 @@ fun HeroItem(
                 .fillMaxWidth(),
             color = Color.Black.copy(alpha = ContentAlpha.medium),
             shape = RoundedCornerShape(
-                bottomStart = LARGE_PADDING,
-                bottomEnd = LARGE_PADDING,
+                bottomStart = MEDIUM_LARGE_PADDING,
+                bottomEnd = MEDIUM_LARGE_PADDING,
             )
         ) {
             Column(
@@ -92,10 +116,10 @@ fun HeroItem(
                 Text(
                     text = heroModel.heroName,
                     style = TextStyle(
-                        color = Black,
+                        color = White,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily.Monospace,
+                        fontFamily = FontFamily.SansSerif,
                     ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -105,9 +129,9 @@ fun HeroItem(
                 Text(
                     text = heroModel.heroAbout,
                     style = TextStyle(
-                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                        fontSize = HERO_DESCRIPTION_SIZE,
                         fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily.Monospace,
+                        fontFamily = FontFamily.SansSerif,
                         color = Color.White.copy(alpha = ContentAlpha.medium)
                     ),
                     maxLines = 3,
@@ -124,9 +148,9 @@ fun HeroItem(
                         rating = heroModel.heroRating
                     )
                     Text(
-                        text = heroModel.heroAbout,
+                        text = heroModel.heroRating.toString(),
                         style = TextStyle(
-                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                            fontSize = HERO_TITLE_SIZE,
                             fontWeight = FontWeight.Bold,
                             fontFamily = FontFamily.Monospace,
                             color = Color.White.copy(alpha = ContentAlpha.medium)
@@ -136,6 +160,46 @@ fun HeroItem(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun HeroItemPreview() {
+    HeroItem(
+        navController = rememberNavController(), heroModel = HeroModel(
+            id = 1,
+            heroImage = "",
+            heroName = "Namikaze Minato",
+            heroAbout = "Lorem ipsum dolor sit amet, haksjhd , ashndlh asjdjaslkdjaslkdj jadlja s lkdjaskldj alksdjaklsj daslkdjalsjd jsalkdjasj dlkasjdçksdjiso jiasj iajkldsjlas",
+            heroAbilities = listOf(),
+            heroFamily = listOf(),
+            heroPower = 100,
+            heroRating = 4.5,
+            month = "",
+            day = "",
+            heroNatureTypes = listOf()
+        )
+    )
+}
+
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun HeroItemDarkPreview() {
+    HeroItem(
+        navController = rememberNavController(), heroModel = HeroModel(
+            id = 1,
+            heroImage = "",
+            heroName = "Namikaze Minato",
+            heroAbout = "Lorem ipsum dolor sit amet, haksjhd , ashndlh asjdjaslkdjaslkdj jadlja s lkdjaskldj alksdjaklsj daslkdjalsjd jsalkdjasj dlkasjdçksdjiso jiasj iajkldsjlas",
+            heroAbilities = listOf(),
+            heroFamily = listOf(),
+            heroPower = 100,
+            heroRating = 4.5,
+            month = "",
+            day = "",
+            heroNatureTypes = listOf()
+        )
+    )
 }
 
 
