@@ -9,6 +9,8 @@ import com.raveline.borutoapp.data.database.HeroDatabase
 import com.raveline.borutoapp.data.model.HeroModel
 import com.raveline.borutoapp.data.model.HeroRemoteKeyModel
 import com.raveline.borutoapp.data.remote.NarutoApi
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
@@ -21,7 +23,18 @@ class HeroRemoteMediator @Inject constructor(
     private val heroRemoteKeyDao = heroDatabase.heroRemoteKeyDao()
 
     override suspend fun initialize(): InitializeAction {
-        return super.initialize()
+        val currentTime = System.currentTimeMillis()
+        val lastUpdated = heroRemoteKeyDao.getRemoteKey(id = 1)?.lastUpdated ?: 0L
+        //Cache timeout in hours
+        val cacheTimeout = 1440
+
+        //Calculate milliseconds to transform in minutes
+        val diffMinutes = (currentTime - lastUpdated) / 1000 / 60
+        return if (diffMinutes.toInt() <= cacheTimeout) {
+            InitializeAction.SKIP_INITIAL_REFRESH
+        } else {
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        }
     }
 
     override suspend fun load(
@@ -66,7 +79,8 @@ class HeroRemoteMediator @Inject constructor(
                         HeroRemoteKeyModel(
                             id = hero.id,
                             prevPage = prevPage,
-                            nextPage = nextPage
+                            nextPage = nextPage,
+                            lastUpdated = response.lastUpdated
                         )
                     }
                     heroRemoteKeyDao.addAllRemoteKeys(keys)
@@ -106,4 +120,10 @@ class HeroRemoteMediator @Inject constructor(
             ?.let { hero ->
                 heroRemoteKeyDao.getRemoteKey(id = hero.id)
             }
+
+    private fun parseMillis(millis: Long): String {
+        val date = Date(millis)
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
+        return dateFormat.format(date)
+    }
 }
