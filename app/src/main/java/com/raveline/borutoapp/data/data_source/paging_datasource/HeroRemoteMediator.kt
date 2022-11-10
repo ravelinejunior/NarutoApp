@@ -20,6 +20,10 @@ class HeroRemoteMediator @Inject constructor(
     private val heroDao = heroDatabase.heroDao()
     private val heroRemoteKeyDao = heroDatabase.heroRemoteKeyDao()
 
+    override suspend fun initialize(): InitializeAction {
+        return super.initialize()
+    }
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, HeroModel>
@@ -33,10 +37,10 @@ class HeroRemoteMediator @Inject constructor(
                 }
                 LoadType.PREPEND -> {
                     val remoteKey = getRemoteKeyForFirstItem(state)
-                    val previousPage = remoteKey?.prevPage ?: return MediatorResult.Success(
+                    val prevPage = remoteKey?.prevPage ?: return MediatorResult.Success(
                         endOfPaginationReached = remoteKey != null
                     )
-                    previousPage
+                    prevPage
                 }
                 LoadType.APPEND -> {
                     val remoteKey = getRemoteKeyForLastItem(state)
@@ -56,12 +60,12 @@ class HeroRemoteMediator @Inject constructor(
                         heroRemoteKeyDao.deleteRemoteKeys()
                     }
 
-                    val previousPage = response.previousPage
+                    val prevPage = response.prevPage
                     val nextPage = response.nextPage
                     val keys = response.heroes.map { hero ->
                         HeroRemoteKeyModel(
                             id = hero.id,
-                            prevPage = previousPage,
+                            prevPage = prevPage,
                             nextPage = nextPage
                         )
                     }

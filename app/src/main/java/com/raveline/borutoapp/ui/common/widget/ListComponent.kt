@@ -61,8 +61,6 @@ fun ListComponent(
                 }
             }
         }
-    }else{
-        ShimmerEffect()
     }
 }
 
