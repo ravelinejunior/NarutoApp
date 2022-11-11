@@ -92,6 +92,7 @@ fun handlePagingResult(
     }
 }
 
+@ExperimentalCoilApi
 @Composable
 fun HeroItem(
     navController: NavController,
@@ -196,6 +197,7 @@ fun HeroItem(
     }
 }
 
+@OptIn(ExperimentalCoilApi::class)
 @Preview
 @Composable
 fun HeroItemPreview() {
@@ -216,6 +218,7 @@ fun HeroItemPreview() {
     )
 }
 
+@OptIn(ExperimentalCoilApi::class)
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun HeroItemDarkPreview() {

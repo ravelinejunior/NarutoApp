@@ -1,5 +1,6 @@
 package com.raveline.borutoapp.data.data_source.paging_datasource
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -65,6 +66,7 @@ class HeroRemoteMediator @Inject constructor(
             }
 
             val response = narutoApi.getAllHeroes(page = page)
+            Log.d("TAG_Response", "Response Body: $response")
             if (response.heroes.isNotEmpty()) {
                 // Allow you to make multiple operations inside the database
                 heroDatabase.withTransaction {
@@ -75,6 +77,8 @@ class HeroRemoteMediator @Inject constructor(
 
                     val prevPage = response.prevPage
                     val nextPage = response.nextPage
+                    Log.d("TAG_Page", "Response Next Page: $nextPage")
+                    Log.d("TAG_Page", "Response Prev Page: $prevPage")
                     val keys = response.heroes.map { hero ->
                         HeroRemoteKeyModel(
                             id = hero.id,
