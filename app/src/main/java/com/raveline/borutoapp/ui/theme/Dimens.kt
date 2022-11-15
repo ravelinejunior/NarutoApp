@@ -13,6 +13,7 @@ val BIG_SMALL_PADDING = 8.dp
 
 //Box
 val HERO_BOX_HEIGHT_SIZE = 400.dp
+val NETWORK_ERROR_ICON_HEIGHT = 120.dp
 
 //Font
 val HERO_TITLE_SIZE = 20.sp

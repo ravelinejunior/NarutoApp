@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f1c847841d6c8ae7087f5f5c39680924",
+    "identityHash": "2f08b8c07ab7760ee3842c4dbab82b92",
     "entities": [
       {
         "tableName": "HERO_TABLE",
@@ -86,7 +86,7 @@
       },
       {
         "tableName": "HERO_REMOTE_KEY_TABLE",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `nextPage` INTEGER, `prevPage` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `nextPage` INTEGER, `prevPage` INTEGER, `lastUpdated` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -105,6 +105,12 @@
             "columnName": "prevPage",
             "affinity": "INTEGER",
             "notNull": false
+          },
+          {
+            "fieldPath": "lastUpdated",
+            "columnName": "lastUpdated",
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -120,7 +126,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f1c847841d6c8ae7087f5f5c39680924')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2f08b8c07ab7760ee3842c4dbab82b92')"
     ]
   }
 }
