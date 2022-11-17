@@ -20,6 +20,7 @@ import com.raveline.borutoapp.R
 import com.raveline.borutoapp.ui.theme.DarkGray
 import com.raveline.borutoapp.ui.theme.LightGray
 import com.raveline.borutoapp.ui.theme.SMALL_PADDING
+import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 @Composable
@@ -27,7 +28,7 @@ fun EmptyScreen(
     error: LoadState.Error
 ) {
     val message by remember {
-        mutableStateOf(parseErrorMessage(message = error.toString()))
+        mutableStateOf(parseErrorMessage(error))
     }
 
     val resRaw by remember {
@@ -93,12 +94,12 @@ fun EmptyContent(alphaAnim: Float, message: String, resRaw: Int) {
     }
 }
 
-fun parseErrorMessage(message: String): String {
-    return when {
-        message.contains(ignoreCase = true, other = "SocketTimeoutException") -> {
+fun parseErrorMessage(mError: LoadState.Error): String {
+    return when (mError.error) {
+        is SocketTimeoutException -> {
             "Server Unavailable!"
         }
-        message.contains(ignoreCase = true, other = "ConnectException") -> {
+        is ConnectException -> {
             "Internet Unavailable!"
         }
         else -> {

@@ -64,7 +64,7 @@ val Colors.topBarBackgroundColorLightDarkMode
 
 val Colors.topBarContentColorLightDarkMode
     @Composable
-    get() = if (isLight) Black else Color.Blue
+    get() = if (!isLight) Black else Blue80
 
 
 
