@@ -5,4 +5,5 @@
     <string name="hero_image">Hero_Image</string>
     <string name="network_error_desc">NetworkContentDescription</string>
     <string name="search_icon_content">SearchIconContentDesc</string>
+    <string name="info_icon">Info Icon</string>
 </resources>

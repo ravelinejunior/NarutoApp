@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.raveline.borutoapp.ui.screens.detailScreen.DetailScreen
 import com.raveline.borutoapp.ui.screens.homeScreen.HomeScreen
 import com.raveline.borutoapp.ui.screens.searchScreen.SearchScreen
 import com.raveline.borutoapp.ui.screens.splashScreen.SplashScreen
@@ -36,7 +37,7 @@ fun SetupNavGraph(navController: NavHostController) {
                 type = NavType.IntType
             })
         ) {
-
+            DetailScreen(navController = navController)
         }
         composable(route = Screen.Search.route) {
             SearchScreen(navController = navController)
