@@ -10,4 +10,7 @@ class HeroesUseCase(
 ) {
     operator fun invoke(): Flow<PagingData<HeroModel>> =
         repository.getAllHeroesData()
+
+    operator fun invoke(query: String): Flow<PagingData<HeroModel>> =
+        repository.searchHeroes(query)
 }
