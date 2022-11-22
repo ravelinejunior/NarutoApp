@@ -45,7 +45,7 @@ fun ListComponent(
     heroes: LazyPagingItems<HeroModel>,
     navController: NavController
 ) {
-    if(handlePagingResult(heroes = heroes)){
+    if (handlePagingResult(heroes = heroes)) {
         LazyColumn(
             contentPadding = PaddingValues(all = SMALL_PADDING),
             verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
@@ -84,6 +84,11 @@ fun handlePagingResult(
 
             error != null -> {
                 EmptyScreen(error = error)
+                false
+            }
+
+            heroes.itemCount < 1 -> {
+                EmptyScreen()
                 false
             }
 

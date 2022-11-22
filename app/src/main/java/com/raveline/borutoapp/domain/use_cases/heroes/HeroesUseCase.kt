@@ -4,8 +4,9 @@ import androidx.paging.PagingData
 import com.raveline.borutoapp.data.model.HeroModel
 import com.raveline.borutoapp.data.repositoryImpl.Repository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class HeroesUseCase(
+class HeroesUseCase @Inject constructor(
     private val repository: Repository
 ) {
     operator fun invoke(): Flow<PagingData<HeroModel>> =

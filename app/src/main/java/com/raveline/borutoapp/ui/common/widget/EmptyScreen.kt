@@ -25,14 +25,19 @@ import java.net.SocketTimeoutException
 
 @Composable
 fun EmptyScreen(
-    error: LoadState.Error
+    error: LoadState.Error?=null
 ) {
-    val message by remember {
-        mutableStateOf(parseErrorMessage(error))
+    var message by remember {
+        mutableStateOf("Find your hero!")
     }
 
-    val resRaw by remember {
-        mutableStateOf(R.raw.internet_error)
+    var resRaw by remember {
+        mutableStateOf(R.raw.searching)
+    }
+
+    if(error != null){
+        message = parseErrorMessage(error)
+        resRaw = R.raw.internet_error
     }
 
     var startAnimation by remember {
@@ -94,8 +99,8 @@ fun EmptyContent(alphaAnim: Float, message: String, resRaw: Int) {
     }
 }
 
-fun parseErrorMessage(mError: LoadState.Error): String {
-    return when (mError.error) {
+fun parseErrorMessage(mError: LoadState.Error?): String {
+    return when (mError?.error) {
         is SocketTimeoutException -> {
             "Server Unavailable!"
         }
