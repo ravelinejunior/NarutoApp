@@ -15,6 +15,7 @@ val BIG_SMALL_PADDING = 8.dp
 val HERO_BOX_HEIGHT_SIZE = 400.dp
 val TOP_APP_BAR_HEIGHT = 56.dp
 val ICON_SIZE_BOX = 32.dp
+val MIN_SHEET_HEIGHT = 150.dp
 
 //Font
 val HERO_TITLE_SIZE = 16.sp
