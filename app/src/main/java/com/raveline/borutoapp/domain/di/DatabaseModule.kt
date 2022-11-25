@@ -3,6 +3,10 @@ package com.raveline.borutoapp.domain.di
 import android.content.Context
 import androidx.room.Room
 import com.raveline.borutoapp.data.database.HeroDatabase
+import com.raveline.borutoapp.data.database.dao.HeroDao
+import com.raveline.borutoapp.data.database.dao.HeroRemoteKeyDao
+import com.raveline.borutoapp.data.repositoryImpl.LocalDataSourceImpl
+import com.raveline.borutoapp.domain.repository.LocalDataSource
 import com.raveline.borutoapp.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -25,4 +29,16 @@ object DatabaseModule {
         .fallbackToDestructiveMigrationOnDowngrade()
         .allowMainThreadQueries()
         .build()
+
+    @Provides
+    @Singleton
+    fun providesHeroDao(database: HeroDatabase): HeroDao = database.heroDao()
+
+    @Provides
+    @Singleton
+    fun providesHeroKeyDao(database: HeroDatabase): HeroRemoteKeyDao = database.heroRemoteKeyDao()
+
+    @Provides
+    @Singleton
+    fun providesLocalDataSource(heroDao: HeroDao): LocalDataSource = LocalDataSourceImpl(heroDao)
 }

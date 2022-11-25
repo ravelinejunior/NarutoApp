@@ -14,4 +14,7 @@ class HeroesUseCase @Inject constructor(
 
     operator fun invoke(query: String): Flow<PagingData<HeroModel>> =
         repository.searchHeroes(query)
+
+    suspend operator fun invoke(heroId: Int): HeroModel =
+        repository.getSelectedHero(heroId = heroId)
 }
