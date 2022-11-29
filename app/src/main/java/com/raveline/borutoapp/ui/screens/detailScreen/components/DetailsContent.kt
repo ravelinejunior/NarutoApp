@@ -1,25 +1,29 @@
 package com.raveline.borutoapp.ui.screens.detailScreen.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.raveline.borutoapp.R
 import com.raveline.borutoapp.data.model.HeroModel
 import com.raveline.borutoapp.ui.common.components.InfoBox
 import com.raveline.borutoapp.ui.common.components.OrderedList
 import com.raveline.borutoapp.ui.theme.*
+import com.raveline.borutoapp.utils.Constants.BASE_URL
 
 @ExperimentalMaterialApi
 @Composable
@@ -39,7 +43,16 @@ fun DetailsContent(
                 BottomSheetContent(selectedHero = it)
             }
         },
-        content = {},
+        content = {
+            selectedHero?.heroImage?.let { heroImage ->
+                BackgroundContent(
+                    heroImage = heroImage,
+                    onClosedClicked = {
+                        navController.popBackStack()
+                    },
+                )
+            }
+        },
     )
 }
 
@@ -161,6 +174,57 @@ fun BottomSheetContent(
         }
 
 
+    }
+
+}
+
+@Composable
+fun BackgroundContent(
+    heroImage: String,
+    imageFraction: Float = 1f,
+    backgroundColor: Color = MaterialTheme.colors.surface,
+    onClosedClicked: () -> Unit
+) {
+
+    val imageUrl = "$BASE_URL$heroImage"
+    val painter = rememberAsyncImagePainter(
+        model = imageUrl, placeholder = painterResource(
+            id = R.drawable.ic_baseline_fireplace_24,
+        ),
+        error = painterResource(
+            id = R.drawable.ic_baseline_fireplace_24
+        )
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(backgroundColor),
+    ) {
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(fraction = imageFraction),
+            painter = painter, contentDescription = stringResource(id = R.string.hero_image),
+            contentScale = ContentScale.Crop,
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.End,
+        ) {
+            IconButton(
+                onClick = { onClosedClicked() },
+                modifier = Modifier.padding(all = SMALL_PADDING),
+            ) {
+                Icon(
+                    modifier = Modifier.size(ICON_SIZE_BOX),
+                    imageVector = Icons.Default.Close,
+                    contentDescription = stringResource(id = R.string.close_string),
+                    tint = Color.White,
+                )
+            }
+        }
     }
 
 }

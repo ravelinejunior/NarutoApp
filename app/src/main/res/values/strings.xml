@@ -13,4 +13,5 @@
     <string name="nature_types_string">Nature Types</string>
     <string name="abilities_string">Abilities</string>
     <string name="family_string">Family</string>
+    <string name="close_string">Close</string>
 </resources>
