@@ -1,13 +1,16 @@
 package com.raveline.borutoapp.ui.screens.detailScreen.components
 
 import android.util.Log
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -17,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.raveline.borutoapp.R
@@ -39,9 +43,17 @@ fun DetailsContent(
 
     val currentSheetFraction = scaffoldState.currentSheetFraction
 
+    val radiusAnim by animateDpAsState(
+        targetValue = if (currentSheetFraction == 1f) EXTRA_LARGE_PADDING else 0.dp
+    )
+
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = MIN_SHEET_HEIGHT,
+        sheetShape = RoundedCornerShape(
+            topStart = radiusAnim,
+            topEnd = radiusAnim
+        ),
         sheetContent = {
             selectedHero?.let {
                 BottomSheetContent(selectedHero = it)
@@ -66,7 +78,8 @@ fun BottomSheetContent(
     selectedHero: HeroModel,
     infoBoxIconColor: Color = MaterialTheme.colors.primary,
     sheetBackgroundColor: Color = MaterialTheme.colors.surface,
-    contentColor: Color = MaterialTheme.colors.titleWelcomeColor,
+    contentColor: Color = MaterialTheme.colors.activeColorIndicator,
+    titleColor: Color = MaterialTheme.colors.titleWelcomeColor,
 ) {
 
     Column(
@@ -82,7 +95,7 @@ fun BottomSheetContent(
         ) {
             Icon(
                 modifier = Modifier.size(MIN_SHEET_HEIGHT / 2),
-                painter = painterResource(id = R.drawable.shuriken),
+                painter = painterResource(id = R.drawable.ic_baseline_local_fire_department_24),
                 contentDescription = stringResource(
                     id = R.string.app_name
                 ),
@@ -140,7 +153,7 @@ fun BottomSheetContent(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.about_string),
-            color = contentColor,
+            color = titleColor,
             fontSize = MaterialTheme.typography.subtitle1.fontSize,
             fontWeight = FontWeight.Bold,
         )
@@ -150,7 +163,7 @@ fun BottomSheetContent(
                 .alpha(ContentAlpha.medium)
                 .padding(bottom = MEDIUM_PADDING),
             text = selectedHero.heroAbout,
-            color = contentColor,
+            color = titleColor,
             fontSize = MaterialTheme.typography.body1.fontSize,
             fontWeight = FontWeight.Bold,
             maxLines = 7,
@@ -164,17 +177,17 @@ fun BottomSheetContent(
             OrderedList(
                 title = stringResource(R.string.family_string),
                 items = selectedHero.heroFamily,
-                textColor = contentColor
+                textColor = titleColor
             )
             OrderedList(
                 title = stringResource(R.string.abilities_string),
                 items = selectedHero.heroAbilities,
-                textColor = contentColor
+                textColor = titleColor
             )
             OrderedList(
                 title = stringResource(R.string.nature_types_string),
                 items = selectedHero.heroNatureTypes,
-                textColor = contentColor
+                textColor = titleColor
             )
         }
 

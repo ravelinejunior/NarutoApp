@@ -32,7 +32,8 @@ fun OrderedList(
                 modifier = Modifier.alpha(ContentAlpha.medium),
                 text = "${index + 1}. $item",
                 color = textColor,
-                fontSize = MaterialTheme.typography.body1.fontSize
+                fontSize = MaterialTheme.typography.body1.fontSize,
+                fontWeight = FontWeight.Bold
             )
         }
     }
