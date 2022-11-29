@@ -22,4 +22,7 @@ object Constants {
 
     //Network
     const val BASE_URL = "http://10.0.2.2:8080"
+
+    //Constants
+    const val MINIMUM_BACKGROUND_IMAGE_HEIGHT = 0.4f
 }

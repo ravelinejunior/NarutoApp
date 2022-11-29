@@ -1,5 +1,6 @@
 package com.raveline.borutoapp.ui.screens.detailScreen.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -24,6 +25,7 @@ import com.raveline.borutoapp.ui.common.components.InfoBox
 import com.raveline.borutoapp.ui.common.components.OrderedList
 import com.raveline.borutoapp.ui.theme.*
 import com.raveline.borutoapp.utils.Constants.BASE_URL
+import com.raveline.borutoapp.utils.Constants.MINIMUM_BACKGROUND_IMAGE_HEIGHT
 
 @ExperimentalMaterialApi
 @Composable
@@ -34,6 +36,8 @@ fun DetailsContent(
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Expanded)
     )
+
+    val currentSheetFraction = scaffoldState.currentSheetFraction
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
@@ -47,6 +51,7 @@ fun DetailsContent(
             selectedHero?.heroImage?.let { heroImage ->
                 BackgroundContent(
                     heroImage = heroImage,
+                    imageFraction = currentSheetFraction,
                     onClosedClicked = {
                         navController.popBackStack()
                     },
@@ -204,7 +209,8 @@ fun BackgroundContent(
         Image(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(fraction = imageFraction),
+                .fillMaxHeight(fraction = imageFraction + MINIMUM_BACKGROUND_IMAGE_HEIGHT)
+                .align(Alignment.TopStart),
             painter = painter, contentDescription = stringResource(id = R.string.hero_image),
             contentScale = ContentScale.Crop,
         )
@@ -228,6 +234,27 @@ fun BackgroundContent(
     }
 
 }
+
+@ExperimentalMaterialApi
+val BottomSheetScaffoldState.currentSheetFraction: Float
+    get() {
+        val TAG = "TAG_DetailsContent"
+        val fraction = bottomSheetState.progress.fraction
+        val targetValue = bottomSheetState.targetValue
+        val currentValue = bottomSheetState.currentValue
+
+        Log.d(TAG, "Fraction: $fraction")
+        Log.d(TAG, "Fraction Target: $targetValue")
+        Log.d(TAG, "Fraction Current Value: $currentValue")
+
+        return when {
+            currentValue == BottomSheetValue.Collapsed && targetValue == BottomSheetValue.Collapsed -> 1f
+            currentValue == BottomSheetValue.Expanded && targetValue == BottomSheetValue.Expanded -> 0f
+            currentValue == BottomSheetValue.Collapsed && targetValue == BottomSheetValue.Expanded -> 1f - fraction
+            currentValue == BottomSheetValue.Expanded && targetValue == BottomSheetValue.Collapsed -> 0f + fraction
+            else -> fraction
+        }
+    }
 
 @Preview
 @Composable
