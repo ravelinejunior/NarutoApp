@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +31,12 @@ fun SearchTopBar(
     onSearchClicked: (String) -> Unit,
     onCloseClicked: () -> Unit,
 ) {
-    SearchWidget(text = text, onTextChange = onTextChange, onSearchClicked = onSearchClicked,onCloseClicked=onCloseClicked)
+    SearchWidget(
+        text = text,
+        onTextChange = onTextChange,
+        onSearchClicked = onSearchClicked,
+        onCloseClicked = onCloseClicked
+    )
 }
 
 @Composable
@@ -42,12 +49,19 @@ fun SearchWidget(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(TOP_APP_BAR_HEIGHT),
+            .height(TOP_APP_BAR_HEIGHT)
+            .semantics {
+                contentDescription = "SearchWidget"
+            },
         elevation = AppBarDefaults.TopAppBarElevation,
-        color = MaterialTheme.colors.topBarContentColorLightDarkMode
+        color = MaterialTheme.colors.topBarContentColorLightDarkMode,
     ) {
         TextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .semantics {
+                    contentDescription = "TextField"
+                },
             value = text,
             onValueChange = { onTextChange(it) },
             placeholder = {
@@ -63,7 +77,11 @@ fun SearchWidget(
             singleLine = true,
             leadingIcon = {
                 IconButton(
-                    modifier = Modifier.alpha(alpha = ContentAlpha.medium),
+                    modifier = Modifier
+                        .alpha(alpha = ContentAlpha.medium)
+                        .semantics {
+                            contentDescription = "SearchIcon"
+                        },
                     onClick = { }) {
                     Icon(
                         imageVector = Icons.Default.Search, contentDescription = stringResource(
@@ -75,7 +93,11 @@ fun SearchWidget(
             },
             trailingIcon = {
                 IconButton(
-                    modifier = Modifier.alpha(alpha = ContentAlpha.medium),
+                    modifier = Modifier
+                        .alpha(alpha = ContentAlpha.medium)
+                        .semantics {
+                            contentDescription = "CloseIcon"
+                        },
                     onClick = {
                         if (text.isNotEmpty()) {
                             onTextChange("")
